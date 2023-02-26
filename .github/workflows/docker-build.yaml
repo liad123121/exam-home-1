@@ -39,8 +39,10 @@ jobs:
       env:
         ECR_REPOSITORY: exam-cluster
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        LATEST_IMAGE: ${{ github.event.repository.name }}:latest
-        FULL_IMAGE: ${{ github.event.repository.name }}:${{ github.event.repository.name }}-${{ steps.branch_name.outputs.branch }}-${{ steps.sha_short.outputs.sha_short}}
+        LATEST_IMAGE: $ECR_REPOSITORY:latest
+        FULL_IMAGE: $ECR_REPOSITORY:$ECR_REPOSITORY-${{ steps.branch_name.outputs.branch }}-${{ steps.sha_short.outputs.sha_short}}
       run: |
        docker build -t $ECR_REGISTRY/$LATEST_IMAGE .
-       docker push $ECR_REGISTRY/$ECR_REPOSITORY:$LATEST_IMAGE
+       docker build -t $ECR_REGISTRY/$FULL_IMAGE .
+       docker push $ECR_REGISTRY/$FULL_IMAGE
+       docker push $ECR_REGISTRY/$LATEST_IMAGE
