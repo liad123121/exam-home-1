@@ -15,8 +15,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: branch_name
+
     - name: Building lastest image
       run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:latest\
 
     - name: Building second image
-      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:${{ github.event.repository.name }}-${{GITHUB_REF##*/}}-${{ github.sha}}
+      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:${{ github.event.repository.name }}-${{ steps.branch_name.outputs.branch }}-${{ github.sha}}
