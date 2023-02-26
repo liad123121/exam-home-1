@@ -17,11 +17,15 @@ jobs:
 
     - name: Extract branch name
       shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})"
       id: branch_name
 
+    - name: Extract sha in a short form
+      run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      id: sha_short
+
     - name: Building lastest image
-      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:latest\
+      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:latest
 
     - name: Building second image
-      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:${{ github.event.repository.name }}-${{ steps.branch_name.outputs.branch }}-${{ github.sha}}
+      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:${{ github.event.repository.name }}-${{ steps.branch_name.outputs.branch }}-${{ steps.sha_short.outputs.sha_short}}
