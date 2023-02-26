@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Building lastest image
+      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:latest\
+
+    - name: Building second image
+      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:${{ github.event.repository.name }}-{{github.event.branch.name}}-${{ github.sha }}
