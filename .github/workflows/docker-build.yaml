@@ -19,4 +19,4 @@ jobs:
       run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:latest\
 
     - name: Building second image
-      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:${{ github.event.repository.name }}-${GITHUB_REF##*/}-${{ github.sha::7}}
+      run: docker build . --file Dockerfile --tag ${{ github.event.repository.name }}:${{ github.event.repository.name }}-${GITHUB_REF##*/}-${{ github.sha}}
