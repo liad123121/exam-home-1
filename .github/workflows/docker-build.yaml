@@ -41,7 +41,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         LATEST_IMAGE: ${{ github.event.repository.name }}:latest
         FULL_IMAGE: ${{ github.event.repository.name }}:${{ github.event.repository.name }}-${{ steps.branch_name.outputs.branch }}-${{ steps.sha_short.outputs.sha_short}}
-      run: docker build . --file Dockerfile --tag $ECR_REGISTRY/$LATEST_IMAGE |
-       docker build . --file Dockerfile --tag $ECR_REGISTRY/$FULL_IMAGE |
-       docker push $ECR_REGISTRY/$ECR_REPOSITORY:$FULL_IMAGE |
-       docker push $ECR_REGISTRY/$ECR_REPOSITORY:$LATEST_IMAGE
+      run: docker build . --file Dockerfile --tag $ECR_REGISTRY/$LATEST_IMAGE
+      run: docker build . --file Dockerfile --tag $ECR_REGISTRY/$FULL_IMAGE
+      run: docker push $ECR_REGISTRY/$ECR_REPOSITORY:$FULL_IMAGE
+      run: docker push $ECR_REGISTRY/$ECR_REPOSITORY:$LATEST_IMAGE
