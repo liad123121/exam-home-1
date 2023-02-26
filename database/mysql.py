@@ -3,9 +3,9 @@ from flask import Flask
 
 
 mydb = mysql.connector.connect(
-    host="db",
-    user="root",
-    passwd = "123456"
+    host="mysql-db.ct4hzdn8nbjk.us-east-2.rds.amazonaws.com",
+    user="admin",
+    passwd = "12345678"
 )
 
 def init_db(app: Flask):
